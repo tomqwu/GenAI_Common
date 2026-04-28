@@ -2,6 +2,8 @@
 
 This file provides project memory and working rules for Claude Code when working in this repository.
 
+The cross-agent baseline lives in [`AGENTS.md`](./AGENTS.md). Read it first when rules in the two files appear to overlap; Claude-specific addenda below take precedence inside Claude Code sessions.
+
 ## Repository purpose
 
 `GenAI_Common` is a living knowledge base for practical AI-agent-assisted software engineering. It collects reusable instructions, coding-agent patterns, implementation playbooks, research notes, and Azure/GenAI architecture guidance.
