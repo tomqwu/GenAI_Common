@@ -2,7 +2,7 @@
 
 Cross-agent baseline rules for this repository. Consumed by Codex CLI, Cursor, Aider, Jules, OpenHands, Sourcegraph Amp, Factory, and other tools that read `AGENTS.md`.
 
-Claude Code does not read this file natively; `CLAUDE.md` imports it via `@AGENTS.md`. GitHub Copilot has its own file at `.github/copilot-instructions.md` which restates the rules below for Copilot.
+Claude Code does not read this file natively; `CLAUDE.md` cross-references it via a markdown link at the top. GitHub Copilot has its own file at `.github/copilot-instructions.md` which restates the rules below for Copilot.
 
 ## Repository purpose
 
@@ -116,7 +116,7 @@ When the user provides repos, guides, articles, or PDFs:
 
 ## File-by-file scope notes
 
-- `CLAUDE.md` — Claude Code only. Imports `@AGENTS.md` and adds Claude-specific addenda.
+- `CLAUDE.md` — Claude Code only. Cross-references this file at the top and adds Claude-specific addenda. Uses a markdown link rather than `@AGENTS.md` import to avoid double-loading the baseline into Claude's context.
 - `AGENTS.md` — this file. Universal baseline.
 - `.github/copilot-instructions.md` — GitHub Copilot only.
 - `.github/instructions/*.instructions.md` — path-scoped Copilot rules with `applyTo:` frontmatter.
