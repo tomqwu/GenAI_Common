@@ -30,9 +30,15 @@ Operating model:
 
 ## Current research sources
 
-- Google Skills: `https://github.com/google/skills/tree/main`
-- Huashu Design: `https://github.com/alchaincyf/huashu-design`
-- GStack: `https://github.com/garrytan/gstack`
+The live, authoritative list lives in [`docs/source-repos.md`](./docs/source-repos.md) — 12 sources tracked at last count, each with status (`pending` / `extracted` / `promoted` / `rejected`), the practices we use them for, and a URL.
+
+Highlights so far:
+
+- **Skill conventions** — Anthropic Agent Skills, `google/skills`, `bytedance/deer-flow`, `forrestchang/andrej-karpathy-skills`.
+- **Cross-agent baselines** — the `AGENTS.md` spec, `openai/codex` AGENTS.md, `alchaincyf/huashu-design`, `garrytan/gstack`, `SuperClaude-Org/SuperClaude_Framework`.
+- **Per-host instruction formats** — Anthropic Claude Code memory docs, GitHub Copilot custom instructions, `github/awesome-copilot`.
+
+Add new sources by following the [research handling workflow](./AGENTS.md#research-handling): row in `source-repos.md`, observation in `docs/research-log.md`, then promote stable practices.
 
 ## Working principles
 
