@@ -26,6 +26,8 @@ Claude Code does not read this file natively; `CLAUDE.md` cross-references it vi
 - Keep each file under ~200 lines. Split by topic rather than nesting.
 - Markdown only. No HTML except block comments for human-only notes.
 - One topic per file. Per-path rules go in `.claude/rules/` (Claude) or `.github/instructions/` (Copilot).
+- End any prescriptive instruction file (rules, skills, commands) with a `Boundaries` section that lists what the file does *not* cover and which sibling file does. Forces explicit scope hand-off instead of silent ambiguity.
+- When a file uses YAML frontmatter with a `description:` field, the description must include *trigger phrases* (when to load this) and any competing-tool overrides ("Use this instead of X for Y"), not just a one-line summary.
 
 ## Safety
 
@@ -43,6 +45,7 @@ Claude Code does not read this file natively; `CLAUDE.md` cross-references it vi
 - Do not cite sources you have not read.
 - When the request is ambiguous, present 2-3 differentiated options rather than guessing.
 - When extracting facts (brand colors, API shapes, schema fields), read them from the canonical source. Do not recall from memory.
+- For research-style tasks, encode a hard-stop checklist in the work and refuse to produce output until each item is `yes`. Example: `≥3 search angles covered? sources read in full? limitations included?` If any answer is `no`, keep researching.
 
 ## Validation
 

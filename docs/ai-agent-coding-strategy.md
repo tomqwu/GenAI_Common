@@ -68,6 +68,15 @@ For a new repo:
 - Mixing project-specific examples into general agent rules.
 - Adding marketing language unless the file is explicitly a sales artifact.
 
+## Single source, multi-host
+
+When the same content needs to reach multiple agents, keep one canonical source and emit several delivery files rather than maintaining parallel copies.
+
+- Pick one canonical file per topic. Examples: `AGENTS.md` for the cross-agent baseline; a `SKILL.md` body for a capability bundle.
+- Emit per-host delivery files that wrap or link to the canonical: `CLAUDE.md` cross-references `AGENTS.md`; `.github/copilot-instructions.md` restates the parts Copilot needs; `.cursor/rules/*.mdc` carries the same content for Cursor; a plugin manifest packages it for installable distribution.
+- Document two install paths for users: a structured install (plugin marketplace, package manager) and an append-mode file-drop (`curl -o CLAUDE.md <url>` for new repos, `curl <url> >> CLAUDE.md` for existing ones).
+- When the canonical content changes, list the per-host files that must be updated alongside it. A pre-commit checklist or a CI grep for drift is the safety net.
+
 ## How rules graduate
 
 ```text

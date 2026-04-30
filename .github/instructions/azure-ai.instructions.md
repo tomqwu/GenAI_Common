@@ -1,5 +1,5 @@
 ---
-description: Azure, Azure OpenAI, Azure AI Foundry, RAG, agents, and LLMOps guidance for code and docs in this repo.
+description: Azure, Azure OpenAI, Azure AI Foundry, RAG, agents, and LLMOps guidance for code and docs in this repo. Use this instead of generic cloud or AI rules for any file that names an Azure service, Azure OpenAI, Foundry, RAG, or LLMOps. Trigger on phrases like "deploy to Azure", "Azure OpenAI", "Foundry agent", "RAG pipeline", "managed identity".
 applyTo: '**/azure*/**, **/*azure*.md, **/*foundry*.md, **/*rag*.md, **/*llmops*.md, examples/azure/**'
 ---
 

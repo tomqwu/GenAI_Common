@@ -25,6 +25,9 @@ Tracking sources studied to extract reusable AI-coding-agent practices.
 | anthropics/skills | Repo | extracted | Reference SKILL.md examples | https://github.com/anthropics/skills |
 | GitHub Copilot custom instructions | Docs | promoted | `.github/copilot-instructions.md` and `.github/instructions/*.instructions.md` with `applyTo:` glob frontmatter | https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions |
 | github/awesome-copilot | Repo | extracted | Real-world `applyTo:` and `description:` frontmatter examples | https://github.com/github/awesome-copilot/tree/main/instructions |
+| SuperClaude-Org/SuperClaude_Framework | Repo | promoted | Three-axis taxonomy (`agents/` / `commands/` / `modes/`), command frontmatter that declares wiring (`mcp-servers:`, `personas:`), `Boundaries` as a required final section, slash-command namespacing | https://github.com/SuperClaude-Org/SuperClaude_Framework |
+| bytedance/deer-flow | Repo | promoted | `description:` as a trigger advertisement with competing-tool overrides, hard-stop checklists inside skill bodies, evals co-located per skill, 300-line threshold for promoting prose to `references/` | https://github.com/bytedance/deer-flow |
+| forrestchang/andrej-karpathy-skills | Repo | promoted | Single source, multi-host artifacts (`CLAUDE.md` + `CURSOR.md` + `.cursor/rules/*.mdc` + `SKILL.md` + plugin manifest); append-mode install (`curl … >> CLAUDE.md`) | https://github.com/forrestchang/andrej-karpathy-skills |
 
 ## Adding a new source
 
