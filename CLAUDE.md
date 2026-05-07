@@ -120,6 +120,10 @@ Add `_typos.toml` for project-specific terms: `GenAI`, `Foundry`, `LLMOps`, `app
 
 In order of cost: tier 1 → tier 2 → tier 3 (`--offline`) → tier 4 → tier 3 (online) → manual re-read of each changed file.
 
+### CI
+
+Tiers 1–4 also run as parallel jobs in `.github/workflows/doc-quality.yml` on every push to `main` and every pull request. Local runs surface issues sooner; CI is the safety net.
+
 ## Documentation style
 
 Sections in a rule or playbook doc, in this order:
