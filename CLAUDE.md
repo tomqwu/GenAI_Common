@@ -47,19 +47,78 @@ The instruction files double as drop-in templates for new projects. When editing
 - Confine `GenAI_Common`-specific framing to the "Repository purpose" section, which `BOOTSTRAP.md` flags for replacement.
 - Don't reference paths or files that won't exist in a fresh project.
 
-## Validation commands
+## Quality checks
 
-Before declaring a doc change done:
+Run before declaring a doc change done. Tier 1 needs no install; tiers 2–4 are opt-in but recommended for ongoing maintenance.
+
+### Tier 1 — always run (zero install)
 
 ```bash
-# All relative cross-references resolve
-grep -RIn '\](\./\|](docs/\|](\.github/' .
+# Cross-references resolve (relative links only)
+grep -RIn '\](\./\|](docs/\|](\.github/' . --include='*.md'
 
-# No secrets in the staged diff
+# Secrets scan in staged diff
 git diff --cached | grep -iE 'api[_-]?key|secret|token|password'
+
+# File-length cap (~200 lines per AGENTS.md house style)
+find . -name '*.md' -not -path './.git/*' -exec wc -l {} + \
+  | awk '$1 > 200 && $2 != "total"'
+
+# Each prescriptive instruction file ends with a Boundaries section
+for f in AGENTS.md CLAUDE.md BOOTSTRAP.md \
+         .github/copilot-instructions.md \
+         .github/instructions/*.instructions.md \
+         docs/knowledge/*.md; do
+  [ -e "$f" ] && { grep -q '^## Boundaries' "$f" || echo "MISS Boundaries: $f"; }
+done
 ```
 
-The first command's output should only list links whose targets exist; the second should return nothing.
+The secrets, file-length, and Boundaries checks should print nothing. The cross-ref grep is informational — each line should point at an existing file; manually verify any new ones.
+
+### Tier 2 — markdown lint
+
+```bash
+npx markdownlint-cli2 "**/*.md" "#node_modules"
+```
+
+Configure via `.markdownlint.json` at the repo root. Suggested baseline:
+
+```json
+{
+  "MD013": false,
+  "MD024": { "siblings_only": true },
+  "MD033": { "allowed_elements": ["details", "summary"] }
+}
+```
+
+Disables hard line-length (prose wraps freely), allows the same heading text in non-sibling sections, and allows a small HTML allowlist.
+
+### Tier 3 — link check
+
+```bash
+# Install once: brew install lychee  (or: cargo install lychee)
+lychee --offline '**/*.md'    # relative links only, fast
+lychee '**/*.md'              # adds external URL probes, network-bound
+```
+
+Add `lychee.toml` to allowlist intentionally unreachable URLs (e.g., the `<your-username>` placeholder in `BOOTSTRAP.md`).
+
+### Tier 4 — spell check
+
+```bash
+# Install once: brew install typos-cli  (or: cargo install typos-cli)
+typos
+```
+
+Add `_typos.toml` for project-specific terms: `GenAI`, `Foundry`, `LLMOps`, `applyTo`, `OpenHands`, etc.
+
+### Optional — prose style
+
+`vale` enforces house-style rules like imperative voice. Heavy to configure; only adopt when prose drift becomes a recurring problem.
+
+### Run order
+
+In order of cost: tier 1 → tier 2 → tier 3 (`--offline`) → tier 4 → tier 3 (online) → manual re-read of each changed file.
 
 ## Documentation style
 

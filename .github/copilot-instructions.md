@@ -70,6 +70,10 @@ PR titles under 70 characters. Detail goes in the body.
 - Marketing language in instruction files.
 - Suggesting tool installs the user did not ask for.
 
+## Boundaries
+
+This file does not cover: cross-agent baseline rules (`AGENTS.md`), Claude-specific addenda (`CLAUDE.md`), Azure path-scoped rules (`.github/instructions/azure-ai.instructions.md`), drop-in install for new repos (`BOOTSTRAP.md`), or descriptive knowledge notes (`docs/knowledge/`).
+
 ## References
 
 - `AGENTS.md` for the cross-agent baseline.

@@ -74,6 +74,10 @@ Tier: production
 - Skipping content safety in user-facing examples.
 - Promoting a `prototype` example without re-tagging.
 
+## Boundaries
+
+This file does not cover: cross-agent baseline rules (`AGENTS.md`), Claude-specific addenda (`CLAUDE.md`), Copilot baseline (`.github/copilot-instructions.md`), descriptive Azure/GenAI notes (`docs/knowledge/azure-genai.md`), or non-Azure cloud guidance.
+
 ## References
 
 - Azure OpenAI auth — https://learn.microsoft.com/azure/ai-services/openai/how-to/managed-identity

@@ -129,6 +129,10 @@ When the user provides repos, guides, articles, or PDFs:
 - `docs/source-repos.md` — source tracking.
 - `docs/knowledge/*.md` — descriptive AI/coding notes; not rules.
 
+## Boundaries
+
+This file does not cover: Claude-specific addenda (`CLAUDE.md`), Copilot-specific rules (`.github/copilot-instructions.md`), path-scoped rules (`.github/instructions/*.instructions.md`, `.claude/rules/*.md`), drop-in install instructions (`BOOTSTRAP.md`), the human-facing strategy (`docs/ai-agent-coding-strategy.md`), source tracking and research observations (`docs/source-repos.md`, `docs/research-log.md`), or descriptive knowledge notes (`docs/knowledge/`).
+
 ## References
 
 - AGENTS.md spec — https://agents.md/
