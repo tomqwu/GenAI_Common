@@ -126,6 +126,7 @@ When the user provides repos, guides, articles, or PDFs:
 - `BOOTSTRAP.md` — drop-in install commands and replace-before-use checklist for seeding a new repo.
 - `.github/workflows/*.yml` — repo-specific CI; not part of the bootstrap-template surface.
 - `.markdownlint.json` — tier-2 lint config; consumed by `markdownlint-cli2` locally and in CI.
+- `scripts/check.sh` — local runner that mirrors the CI tiers; auto-skips uninstalled tools.
 - `docs/ai-agent-coding-strategy.md` — human-facing strategy, not enforced as rules.
 - `docs/research-log.md` — observations vs. promoted rules.
 - `docs/source-repos.md` — source tracking.

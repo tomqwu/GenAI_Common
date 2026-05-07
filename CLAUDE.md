@@ -116,13 +116,21 @@ Add `_typos.toml` for project-specific terms: `GenAI`, `Foundry`, `LLMOps`, `app
 
 `vale` enforces house-style rules like imperative voice. Heavy to configure; only adopt when prose drift becomes a recurring problem.
 
+### Local runner
+
+`scripts/check.sh` bundles tiers 1–4 behind one command. Tiers 3 and 4 auto-skip if their binary isn't installed locally, so the script is safe to run even on a fresh machine.
+
+```bash
+./scripts/check.sh
+```
+
 ### Run order
 
-In order of cost: tier 1 → tier 2 → tier 3 (`--offline`) → tier 4 → tier 3 (online) → manual re-read of each changed file.
+In order of cost: tier 1 → tier 2 → tier 3 (`--offline`) → tier 4 → tier 3 (online) → manual re-read of each changed file. `scripts/check.sh` runs tiers 1–4 in this order.
 
 ### CI
 
-Tiers 1–4 also run as parallel jobs in `.github/workflows/doc-quality.yml` on every push to `main` and every pull request. Local runs surface issues sooner; CI is the safety net.
+Tiers 1–4 also run as parallel jobs in `.github/workflows/doc-quality.yml` on every push to `main` and every pull request. A separate `.github/workflows/link-check-online.yml` runs lychee with network on a weekly cron to catch external link rot. The `main` branch is protected: PRs cannot merge until the four `doc-quality` jobs pass.
 
 ## Documentation style
 
