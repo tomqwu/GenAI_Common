@@ -6,7 +6,7 @@ Claude Code does not read this file natively; `CLAUDE.md` cross-references it vi
 
 ## Repository purpose
 
-`GenAI_Common` is a knowledge base of practical AI-agent-assisted software-engineering patterns. It is not a product application. Edits should produce clearer, smaller, more reusable guidance — not bigger documents.
+`GenAI_Common` is a personal knowledge base for AI and software-engineering practice, and a source of drop-in instruction files for new projects. It is not a product application. Edits should produce clearer, smaller, more reusable guidance — not bigger documents. The instruction files (`AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`) double as templates; keep them generic enough to bootstrap another repo. See `BOOTSTRAP.md`.
 
 ## Operating loop
 
@@ -123,9 +123,11 @@ When the user provides repos, guides, articles, or PDFs:
 - `AGENTS.md` — this file. Universal baseline.
 - `.github/copilot-instructions.md` — GitHub Copilot only.
 - `.github/instructions/*.instructions.md` — path-scoped Copilot rules with `applyTo:` frontmatter.
+- `BOOTSTRAP.md` — drop-in install commands and replace-before-use checklist for seeding a new repo.
 - `docs/ai-agent-coding-strategy.md` — human-facing strategy, not enforced as rules.
 - `docs/research-log.md` — observations vs. promoted rules.
 - `docs/source-repos.md` — source tracking.
+- `docs/knowledge/*.md` — descriptive AI/coding notes; not rules.
 
 ## References
 

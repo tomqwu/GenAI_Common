@@ -1,18 +1,19 @@
 # GenAI Common
 
-A living knowledge base for AI-agent-assisted software engineering.
-
-This repository is designed to be ready for Claude Code, Codex-style agents, GitHub Copilot, and future coding agents. It captures reusable coding-agent guidance, repository instruction patterns, implementation playbooks, and research notes.
+A personal knowledge base for AI and software-engineering practice, and a source of drop-in instruction files for new projects.
 
 ## Purpose
 
-The goal is to maintain a practical, continuously updated set of instructions that can be reused across projects.
+This repository serves two roles:
 
-Operating model:
+1. **Bootstrap source** — `AGENTS.md`, `CLAUDE.md`, and `.github/copilot-instructions.md` drop into a fresh project to seed it for Claude Code, Codex-style agents, GitHub Copilot, and similar tools. See [`BOOTSTRAP.md`](./BOOTSTRAP.md).
+2. **Knowledge base** — research observations (`docs/research-log.md`), promoted instruction patterns (the agent files above plus `.github/instructions/`), and descriptive AI/coding notes (`docs/knowledge/`).
+
+Operating model for adding to the knowledge base:
 
 1. Study high-quality public repositories, practical guides, and articles.
 2. Extract repeatable engineering practices.
-3. Convert those practices into agent-readable instructions.
+3. Convert those practices into agent-readable instructions or descriptive knowledge notes.
 4. Test the instructions against real repositories.
 5. Refine the guidance over time.
 
@@ -24,9 +25,11 @@ Operating model:
 | `AGENTS.md` | Codex-style agents, GitHub Copilot coding agent, terminal agents | Cross-agent repository instructions. |
 | `.github/copilot-instructions.md` | GitHub Copilot | Repository-wide Copilot instructions. |
 | `.github/instructions/azure-ai.instructions.md` | GitHub Copilot path/context instructions | Azure and AI-specific implementation guidance. |
+| `BOOTSTRAP.md` | Humans setting up new repos | Drop-in install commands for the agent files. |
 | `docs/ai-agent-coding-strategy.md` | Humans and agents | General operating strategy. |
 | `docs/research-log.md` | Humans and agents | Research notes and extracted practices. |
 | `docs/source-repos.md` | Humans and agents | Source repository tracking. |
+| `docs/knowledge/*.md` | Humans and agents | Descriptive AI/coding notes (not rules). |
 
 ## Current research sources
 

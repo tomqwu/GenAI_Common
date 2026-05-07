@@ -1,144 +1,92 @@
 # CLAUDE.md
 
-This file provides project memory and working rules for Claude Code when working in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-The cross-agent baseline lives in [`AGENTS.md`](./AGENTS.md). Read it first when rules in the two files appear to overlap; Claude-specific addenda below take precedence inside Claude Code sessions.
+The cross-agent baseline lives in [`AGENTS.md`](./AGENTS.md). Read it first; the addenda below are Claude-specific and take precedence inside Claude Code sessions when they conflict.
 
 ## Repository purpose
 
-`GenAI_Common` is a living knowledge base for practical AI-agent-assisted software engineering. It collects reusable instructions, coding-agent patterns, implementation playbooks, research notes, and Azure/GenAI architecture guidance.
+`GenAI_Common` serves two roles:
 
-This repository is not a product application. It is an enablement and reference repository.
+1. **Bootstrap source** for new projects — `AGENTS.md`, `CLAUDE.md`, and `.github/copilot-instructions.md` are designed to drop into a fresh repo. See [`BOOTSTRAP.md`](./BOOTSTRAP.md).
+2. **Personal knowledge base** for AI and software-engineering practice — research observations live under `docs/`, with promoted rules in instruction files and descriptive notes in `docs/knowledge/`.
 
-## Primary operating mode
+This repo is not a product application. There is no build, no package manager, and no test runner. Edits are almost always markdown.
 
-When working in this repository, Claude Code should act as a senior AI engineering assistant and technical editor.
+## Architecture: layered instruction files
 
-The default workflow is:
+The repo's product *is* the instruction stack. Understand the layering before editing any rule:
 
-1. Inspect existing files before proposing changes.
-2. Identify whether the request is research, documentation, code, architecture, or repo hygiene.
-3. Propose a short patch plan for non-trivial changes.
-4. Make small, reviewable edits.
-5. Preserve repo structure and naming conventions.
-6. Summarize changed files and validation performed.
+| Layer | File | Loaded by | Edit when |
+|---|---|---|---|
+| Universal baseline | `AGENTS.md` | Codex, Cursor, Aider, Jules, OpenHands, etc. | A rule should apply to every agent |
+| Claude addenda | `CLAUDE.md` (this file) | Claude Code | Rule is Claude-specific or restates baseline for Claude |
+| Copilot mirror | `.github/copilot-instructions.md` | GitHub Copilot | Same rule needs to reach Copilot |
+| Path-scoped (Copilot) | `.github/instructions/*.instructions.md` with `applyTo:` | Copilot, on matching files | Rule is tech- or path-specific |
+| Path-scoped (Claude) | `.claude/rules/*.md` with `paths:` frontmatter | Claude Code, on matching files | Same as above, for Claude |
+| Strategy / pipeline | `docs/ai-agent-coding-strategy.md`, `docs/source-repos.md`, `docs/research-log.md` | Humans, agents on request | Rationale, source tracking, observation log |
+| Knowledge notes | `docs/knowledge/*.md` | Humans, agents on request | Descriptive AI/coding facts and patterns (not rules) |
 
-## Editing principles
+The research pipeline is observation → tested → promoted. See `AGENTS.md#research-handling`.
 
-- Prefer concise, practical guidance over abstract AI commentary.
-- Write instructions that another coding agent can follow without extra explanation.
-- Use imperative language for agent rules.
-- Keep reusable guidance separate from project-specific examples.
-- Do not bury critical constraints inside long prose.
-- Prefer checklists, templates, and examples where they help execution.
-- Avoid marketing language unless the file is explicitly a sales or executive artifact.
+## Single source, multi-host: keep mirrors in sync
 
-## Repository structure
+When a rule lives in more than one file (the baseline-and-mirror pattern), edits to one must update the other in the same change. Pairs to watch:
 
-Expected structure:
+- `AGENTS.md` ↔ `.github/copilot-instructions.md` — Copilot mirror of the baseline.
+- This file's "Azure and GenAI defaults" ↔ `.github/instructions/azure-ai.instructions.md` ↔ `docs/knowledge/azure-genai.md`.
+- Any rule stated here that also belongs in `AGENTS.md` — promote up rather than fork.
 
-```text
-.
-├── README.md
-├── CLAUDE.md
-├── AGENTS.md
-├── .github/
-│   ├── copilot-instructions.md
-│   └── instructions/
-│       └── azure-ai.instructions.md
-└── docs/
-    ├── ai-agent-coding-strategy.md
-    ├── research-log.md
-    └── source-repos.md
+If you change one side, grep the other (`grep -RIn '<phrase>' .`) and reconcile, or call out the drift in the PR.
+
+## Bootstrap-template discipline
+
+The instruction files double as drop-in templates for new projects. When editing them:
+
+- Keep examples generic enough to apply outside this repo.
+- Confine `GenAI_Common`-specific framing to the "Repository purpose" section, which `BOOTSTRAP.md` flags for replacement.
+- Don't reference paths or files that won't exist in a fresh project.
+
+## Validation commands
+
+Before declaring a doc change done:
+
+```bash
+# All relative cross-references resolve
+grep -RIn '\](\./\|](docs/\|](\.github/' .
+
+# No secrets in the staged diff
+git diff --cached | grep -iE 'api[_-]?key|secret|token|password'
 ```
 
-## Agent instruction hierarchy
-
-Use this precedence order when instructions overlap:
-
-1. User request in the current task.
-2. Repository-specific instructions in `CLAUDE.md` or `AGENTS.md`.
-3. Path-specific instructions under `.github/instructions/`.
-4. General guidance in `docs/`.
-5. Inferred best practices.
-
-When a conflict exists, follow the more specific and safer instruction.
-
-## Research handling
-
-When the user provides repositories, guides, articles, or PDFs:
-
-1. Record the source in `docs/source-repos.md` or the appropriate source tracker.
-2. Extract practices into `docs/research-log.md`.
-3. Promote only stable, actionable practices into `CLAUDE.md`, `AGENTS.md`, or Copilot instruction files.
-4. Separate observations from rules.
-5. Do not represent unverified research as an established best practice.
-
-## Coding guidance
-
-This repo may later contain code samples. When editing or adding code:
-
-- Read the local project conventions first.
-- Keep examples minimal and runnable.
-- Include commands to validate examples.
-- Avoid adding dependencies unless there is a clear reason.
-- Prefer secure defaults for Azure, identity, secrets, networking, and data access.
-- Never hardcode secrets, API keys, tenant IDs, subscription IDs, or customer-sensitive identifiers.
-
-## Azure and GenAI defaults
-
-For Azure AI, Azure OpenAI, Azure AI Foundry, RAG, agents, and LLMOps content:
-
-- Prefer managed identity over static credentials.
-- Prefer Key Vault for secrets when secrets are unavoidable.
-- Include network, identity, observability, evaluation, and cost considerations.
-- Include responsible AI and content safety considerations for user-facing scenarios.
-- Distinguish prototype guidance from production guidance.
-- For financial services examples, explicitly address compliance, auditability, data governance, and human review.
+The first command's output should only list links whose targets exist; the second should return nothing.
 
 ## Documentation style
 
-Use this style for docs:
+Sections in a rule or playbook doc, in this order:
 
-- Start with the purpose.
-- Explain when to use the pattern.
-- Provide the minimum viable workflow.
-- Add implementation checklist.
-- Add validation checklist.
-- Add anti-patterns.
-- Add references or source notes when applicable.
+1. Purpose.
+2. When to use the pattern.
+3. Minimum viable workflow.
+4. Implementation checklist.
+5. Validation checklist.
+6. Anti-patterns.
+7. References / source notes.
 
-## Change safety
+End any prescriptive instruction file with a `Boundaries` section listing what it does *not* cover and which sibling file does (per `AGENTS.md` house style).
 
-Before large edits:
+## Azure and GenAI defaults
 
-- Check whether the file is canonical guidance used by agents.
-- Preserve headings that tools may rely on.
-- Prefer append-and-refine over replacing entire documents.
-- Do not delete research notes unless explicitly requested.
+Mirrors `.github/instructions/azure-ai.instructions.md` (Copilot path rules) and `docs/knowledge/azure-genai.md` (descriptive notes). Update all three when changing.
 
-## Pull request / commit summary format
+- Prefer managed identity over static credentials. Use `DefaultAzureCredential` in code samples.
+- Use Key Vault for any secret that cannot be eliminated.
+- Default to private endpoints for AI Search, Azure OpenAI, Storage, and Cosmos in `production`-tier examples; `prototype` may use public endpoints.
+- Include observability (App Insights or OpenTelemetry), at least one offline eval step, and a cost-per-1K-token note for the chosen model SKU.
+- Include Azure AI Content Safety in user-facing examples.
+- For financial-services examples, explicitly address compliance frame, auditability, data governance, and human review.
+- Every example declares `Tier: prototype` or `Tier: production` at the top.
 
-When summarizing work, use:
+## Boundaries
 
-```text
-Summary:
-- ...
-
-Changed files:
-- path: reason
-
-Validation:
-- ...
-
-Follow-ups:
-- ...
-```
-
-## Do not do
-
-- Do not invent external facts or claim research was completed when it was not.
-- Do not add private customer information.
-- Do not add copyrighted long-form source content.
-- Do not turn exploratory notes into mandatory rules without review.
-- Do not create large, tool-specific silos that contradict each other.
+This file does not cover: cross-agent baseline rules (`AGENTS.md`), Copilot-specific rules (`.github/copilot-instructions.md`), Azure path-scoped rules (`.github/instructions/azure-ai.instructions.md`), the human-facing strategy (`docs/ai-agent-coding-strategy.md`), or descriptive knowledge notes (`docs/knowledge/`). For drop-in install instructions, see `BOOTSTRAP.md`.

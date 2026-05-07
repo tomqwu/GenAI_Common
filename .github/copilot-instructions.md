@@ -6,7 +6,7 @@ The universal baseline is in `AGENTS.md`. This file restates the parts that matt
 
 ## Repository purpose
 
-`GenAI_Common` is a knowledge base of practical AI-coding-agent patterns. It is not a product application. Most edits are markdown.
+`GenAI_Common` is a personal knowledge base for AI and software-engineering practice, and a source of drop-in instruction files for new projects. It is not a product application. Most edits are markdown. The instruction files double as templates; keep them generic enough to bootstrap another repo. See `BOOTSTRAP.md`.
 
 ## House style
 
