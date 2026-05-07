@@ -5,13 +5,29 @@ on:
     - cron: '0 13 * * 0'   # 13:00 UTC every Sunday
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   lychee-online:
     name: lychee (network)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: lycheeverse/lychee-action@v2
+      - name: Link Checker
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
         with:
           args: --verbose --no-progress '**/*.md'
-          fail: true
+          fail: false
+
+      - name: Create issue from broken-link report
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: Link Checker Report
+          content-filepath: ./lychee/out.md
+          labels: |
+            link-rot
+            automated
