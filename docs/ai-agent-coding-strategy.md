@@ -60,6 +60,18 @@ For a new repo:
 - [ ] Ask the agent to summarize the rules it loaded; correct any misreads.
 - [ ] Land one small change end-to-end (read instructions → patch → validate → commit) without manual rule restatement.
 
+## Practical example: builder/reviewer PR loop
+
+One tested operating pattern is to split AI coding into two roles: a builder
+agent opens or updates the PR, while a separate reviewer agent waits for CI and
+posts either `Not LGTM yet` or `LGTM` tied to the exact head SHA. This turns
+agentic coding into a small engineering system rather than a one-shot assistant
+reply.
+
+See [`docs/knowledge/agentic-pr-review-loop.md`](./knowledge/agentic-pr-review-loop.md)
+for the prompt templates, polling schedule, race-condition controls, and
+anti-patterns.
+
 ## Anti-patterns
 
 - Burying critical constraints inside long prose. Agents will skim past them.
