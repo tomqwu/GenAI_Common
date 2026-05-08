@@ -72,9 +72,10 @@ LGTM
 <!-- codex-pr-review: <head_sha> -->
 ```
 
-- If the user or repo policy authorizes the agent to merge, re-fetch PR state
-  immediately before merging and merge only when CI is green, the marker matches
-  the current head SHA, and no newer blocking feedback exists.
+- Builder agents are authorized to merge after the review gate passes.
+  Immediately before merging, re-fetch PR state and merge only when CI is green,
+  the marker matches the current head SHA, and no newer blocking feedback
+  exists.
 
 ## When to defer
 

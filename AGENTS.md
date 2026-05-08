@@ -108,11 +108,11 @@ LGTM
 <!-- codex-pr-review: <head_sha> -->
 
 The marker must match the current head SHA; any new commit makes prior approval
-stale. If the user or repo policy authorizes you to merge, re-fetch the head
-SHA, CI state, comments, and reviews immediately before merging. Merge only if
-CI is green, the marker matches the current head SHA, and no newer blocking
-feedback exists. Otherwise report that the PR is ready but unmerged. Keep review
-and fix discussion visible on the PR.
+stale. You are authorized to merge after the review gate passes. Immediately
+before merging, re-fetch the head SHA, CI state, comments, and reviews. Merge
+only if CI is green, the marker matches the current head SHA, and no newer
+blocking feedback exists. Otherwise report that the PR is ready but unmerged.
+Keep review and fix discussion visible on the PR.
 ```
 
 Reviewer prompt:

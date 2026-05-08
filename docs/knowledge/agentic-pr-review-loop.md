@@ -62,10 +62,10 @@ LGTM
 The marker must match the current PR head SHA. If a new commit is pushed, any
 older LGTM is stale.
 
-If the user or repo policy authorizes you to merge, re-fetch the PR head SHA,
-CI state, comments, and reviews immediately before merging. Merge only if CI is
-green, the marker matches the current head SHA, and no newer blocking feedback
-exists. Otherwise report that the PR is ready but unmerged.
+You are authorized to merge after the review gate passes. Immediately before
+merging, re-fetch the PR head SHA, CI state, comments, and reviews. Merge only
+if CI is green, the marker matches the current head SHA, and no newer blocking
+feedback exists. Otherwise report that the PR is ready but unmerged.
 
 If the reviewer comments "Not LGTM yet":
 1. Treat it as blocking feedback.
@@ -144,8 +144,8 @@ repeated run summaries.
 
 ## Validation checklist
 
-- [ ] The builder cannot merge unless user or repo policy grants merge authority.
-- [ ] Even with merge authority, the builder cannot merge before the gate.
+- [ ] The builder can merge after the review gate passes.
+- [ ] The builder cannot merge before the gate.
 - [ ] The reviewer never posts `LGTM` while CI is pending or failing.
 - [ ] The review marker includes the exact head SHA.
 - [ ] A new commit makes the prior marker stale.

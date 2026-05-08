@@ -58,8 +58,8 @@ You may write code, push branches, and open PRs. Do not merge before the review
 gate passes. After opening or updating a PR, push the branch, wait for CI, and
 wait for independent review. Treat "Not LGTM yet" as blocking. A PR is mergeable
 only when a reviewer comments LGTM with a marker matching the current head SHA.
-If the user or repo policy authorizes you to merge, re-fetch PR state
-immediately before merging and merge only when CI is green, the marker matches
+You are authorized to merge after the review gate passes. Immediately before
+merging, re-fetch PR state and merge only when CI is green, the marker matches
 the current head SHA, and no newer blocking feedback exists.
 ```
 
