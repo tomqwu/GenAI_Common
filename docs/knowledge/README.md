@@ -28,6 +28,9 @@ End each note with a `Boundaries` section listing what the note does *not* cover
 
 ## Existing notes
 
+- [`agentic-pr-review-loop.md`](./agentic-pr-review-loop.md) — Builder/reviewer
+  agent separation for PR quality gates, including compact prompts and scheduler
+  guardrails.
 - [`azure-genai.md`](./azure-genai.md) — Azure / Azure OpenAI / Foundry / RAG / agents / LLMOps reference notes.
 
 ## Planned topics (add when you have material)
