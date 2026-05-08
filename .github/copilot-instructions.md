@@ -61,7 +61,7 @@ PR titles under 70 characters. Detail goes in the body.
 
 ## Agentic PR review gate
 
-- If an AI agent opens or updates a PR, do not merge unless the user explicitly asks.
+- If an AI agent opens or updates a PR, do not merge before the review gate passes.
 - Wait for CI and an independent review signal tied to the current head SHA.
 - Treat a reviewer comment of `Not LGTM yet` as blocking.
 - Treat any new commit as invalidating older approval.
@@ -71,6 +71,10 @@ PR titles under 70 characters. Detail goes in the body.
 LGTM
 <!-- codex-pr-review: <head_sha> -->
 ```
+
+- If the user or repo policy authorizes the agent to merge, re-fetch PR state
+  immediately before merging and merge only when CI is green, the marker matches
+  the current head SHA, and no newer blocking feedback exists.
 
 ## When to defer
 

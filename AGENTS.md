@@ -99,16 +99,20 @@ Approval is valid only for the exact PR head SHA that was reviewed.
 Builder prompt:
 
 ```text
-You may write code, push branches, and open PRs, but do not merge unless the
-user explicitly asks. After opening or updating a PR, push the branch, wait for
-CI, do not enable auto-merge, and wait for independent review. Treat "Not LGTM
-yet" as blocking. A PR is ready only when a reviewer comments:
+You may write code, push branches, and open PRs. Do not merge before the review
+gate passes. After opening or updating a PR, push the branch, wait for CI, and
+wait for independent review. Treat "Not LGTM yet" as blocking. A PR is mergeable
+only when a reviewer comments:
 
 LGTM
 <!-- codex-pr-review: <head_sha> -->
 
 The marker must match the current head SHA; any new commit makes prior approval
-stale. Keep review and fix discussion visible on the PR.
+stale. If the user or repo policy authorizes you to merge, re-fetch the head
+SHA, CI state, comments, and reviews immediately before merging. Merge only if
+CI is green, the marker matches the current head SHA, and no newer blocking
+feedback exists. Otherwise report that the PR is ready but unmerged. Keep review
+and fix discussion visible on the PR.
 ```
 
 Reviewer prompt:
@@ -122,7 +126,7 @@ code review finds issues, comment "Not LGTM yet" with actionable findings and:
 
 If CI is green and no findings remain, post exactly "LGTM" plus the marker.
 Before posting, re-fetch the head SHA and comments to avoid duplicate or stale
-reviews. Do not merge PRs.
+reviews. Do not merge PRs from the reviewer role.
 ```
 
 ## Agent instruction hierarchy
