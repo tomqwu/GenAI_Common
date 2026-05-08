@@ -57,6 +57,19 @@ Follow-ups:
 
 PR titles under 70 characters. Detail goes in the body.
 
+## Agentic PR review gate
+
+- If an AI agent opens or updates a PR, do not merge unless the user explicitly asks.
+- Wait for CI and an independent review signal tied to the current head SHA.
+- Treat a reviewer comment of `Not LGTM yet` as blocking.
+- Treat any new commit as invalidating older approval.
+- A valid approval must include:
+
+```text
+LGTM
+<!-- codex-pr-review: <head_sha> -->
+```
+
 ## When to defer
 
 - If the request is ambiguous, ask a clarifying question or offer 2-3 differentiated options.

@@ -47,6 +47,38 @@ The instruction files double as drop-in templates for new projects. When editing
 - Confine `GenAI_Common`-specific framing to the "Repository purpose" section, which `BOOTSTRAP.md` flags for replacement.
 - Don't reference paths or files that won't exist in a fresh project.
 
+## Agentic PR review gate
+
+Use this builder/reviewer split when a coding agent opens or updates PRs.
+
+Builder prompt:
+
+```text
+You may write code, push branches, and open PRs, but do not merge unless the
+user explicitly asks. After opening or updating a PR, push the branch, wait for
+CI, do not enable auto-merge, and wait for independent review. Treat "Not LGTM
+yet" as blocking. A PR is ready only when a reviewer comments LGTM with a
+marker matching the current head SHA.
+```
+
+Reviewer prompt:
+
+```text
+Review open PRs in the current repo. Fetch metadata, head SHA, diff, comments,
+reviews, and CI. Never post LGTM while CI is pending or failing. If CI fails or
+code review finds issues, comment "Not LGTM yet" with actionable findings. If CI
+is green and no findings remain, post exactly:
+
+LGTM
+<!-- codex-pr-review: <head_sha> -->
+
+Before posting, re-fetch the head SHA and comments to avoid duplicate or stale
+reviews. Do not merge PRs.
+```
+
+See `docs/knowledge/agentic-pr-review-loop.md` for scheduler, lock, and state
+guardrails.
+
 ## Quality checks
 
 Run before declaring a doc change done. Tier 1 needs no install; tiers 2–4 are opt-in but recommended for ongoing maintenance.
