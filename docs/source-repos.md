@@ -28,6 +28,9 @@ Tracking sources studied to extract reusable AI-coding-agent practices.
 | SuperClaude-Org/SuperClaude_Framework | Repo | promoted | Three-axis taxonomy (`agents/` / `commands/` / `modes/`), command frontmatter that declares wiring (`mcp-servers:`, `personas:`), `Boundaries` as a required final section, slash-command namespacing | https://github.com/SuperClaude-Org/SuperClaude_Framework |
 | bytedance/deer-flow | Repo | promoted | `description:` as a trigger advertisement with competing-tool overrides, hard-stop checklists inside skill bodies, evals co-located per skill, 300-line threshold for promoting prose to `references/` | https://github.com/bytedance/deer-flow |
 | forrestchang/andrej-karpathy-skills | Repo | promoted | Single source, multi-host artifacts (`CLAUDE.md` + `CURSOR.md` + `.cursor/rules/*.mdc` + `SKILL.md` + plugin manifest); append-mode install (`curl … >> CLAUDE.md`) | https://github.com/forrestchang/andrej-karpathy-skills |
+| Thoughtworks SPDD | Article | promoted | REASONS Canvas seven-part structured-prompt template; prompt as first-class artifact; behavior→spec-first / refactor→code-first two-way sync; fitness-assessment table | https://martinfowler.com/articles/structured-prompt-driven/ |
+| Martin Fowler — Fragments, 29 Apr 2026 | Article | promoted | Verification is the bottleneck, not generation; computational sensors (static analysis, types, tests, gates) as the harness; identifiers matter more under LLMs | https://martinfowler.com/fragments/2026-04-29.html |
+| chenhg5/cc-connect | Repo | extracted | Bridge-daemon pattern (local agents ↔ chat platforms); capability-interface over identity-switch; plugin self-registration with strict core→adapter dependency direction; versioned dual-language preset manifest; counter-example of duplicated `AGENTS.md`/`CLAUDE.md` without cross-reference | https://github.com/chenhg5/cc-connect |
 
 ## Adding a new source
 

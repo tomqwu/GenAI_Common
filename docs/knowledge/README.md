@@ -32,6 +32,12 @@ End each note with a `Boundaries` section listing what the note does *not* cover
   agent separation for PR quality gates, including compact prompts and scheduler
   guardrails.
 - [`azure-genai.md`](./azure-genai.md) — Azure / Azure OpenAI / Foundry / RAG / agents / LLMOps reference notes.
+- [`structured-prompt-driven-development.md`](./structured-prompt-driven-development.md)
+  — REASONS Canvas, the behavior-vs-refactor spec/code sync flows, and a
+  fitness assessment.
+- [`agent-integration-patterns.md`](./agent-integration-patterns.md) —
+  bridge-daemon, capability-interface, plugin self-registration, and preset-manifest
+  patterns for connecting agents and hosts.
 
 ## Planned topics (add when you have material)
 

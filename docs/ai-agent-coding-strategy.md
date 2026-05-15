@@ -72,6 +72,12 @@ See [`docs/knowledge/agentic-pr-review-loop.md`](./knowledge/agentic-pr-review-l
 for the prompt templates, polling schedule, race-condition controls, and
 anti-patterns.
 
+## Practical example: spec/prompt as a tracked artifact
+
+Treating the governing prompt or spec as a version-controlled, reviewed artifact — kept in two-way sync with the code — turns AI assistance from personal speed into governable team capability. Behavior changes update the spec first; pure refactors update the code first then sync the spec back.
+
+See [`docs/knowledge/structured-prompt-driven-development.md`](./knowledge/structured-prompt-driven-development.md) for the seven-part REASONS Canvas, the sync flows, and a fitness assessment.
+
 ## Anti-patterns
 
 - Burying critical constraints inside long prose. Agents will skim past them.

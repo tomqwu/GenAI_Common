@@ -85,12 +85,44 @@ This log separates **observations** (what a source actually does) from **promote
 - Plugin reference uses `@` namespacing: `andrej-karpathy-skills@karpathy-skills` (package@skill).
 - Content is rule-shaped, not procedure-shaped: each principle is a problem→solution table, no shell snippets — counter-example to runnable-command-heavy skills like google/skills.
 
+### 2026-05-15 — Thoughtworks SPDD (martinfowler.com/articles/structured-prompt-driven/)
+
+- Treats the prompt as a *first-class delivery artifact*: version-controlled, reviewed, reused, kept in sync with code — not an ad-hoc chat.
+- **REASONS Canvas**: seven-part structured prompt — Requirements, Entities, Approach, Structure (abstract intent and design); Operations (execution steps); Norms, Safeguards (governance). Aligns intent and boundaries before code is generated.
+- Spec and code stay synchronized via two named flows: requirements → prompt → code for behavior changes; code → prompt (`/spdd-sync`) for refactors that do not change observable behavior. Rule: "When reality diverges, fix the prompt first — then update the code."
+- Structured prompts are never hand-edited; gaps are fixed by instructing the AI to update only the affected Canvas sections.
+- `openspdd` CLI implements the workflow as discrete commands (`/spdd-analysis`, `/spdd-reasons-canvas`, `/spdd-generate`, `/spdd-prompt-update`, `/spdd-sync`) so artifacts stay versioned and reviewable instead of trapped in chat.
+- Ships a fitness-assessment table rating where the method pays off (scaled or standardized delivery, hard-constraint or compliance systems, auditable team work) versus where it does not (hotfixes, spikes, one-off scripts, ill-defined domains, pure creative work).
+- Categorized by Birgitta Böckeler as a *spec-anchored* approach: the spec is maintained, not generated once and discarded.
+
+### 2026-05-15 — Martin Fowler, Fragments (29 Apr 2026)
+
+- Roundup linking Chris Parsons' AI-coding guide, Birgitta Böckeler's "Harness Engineering," and Adam Tornhill on function length.
+- Verification is the bottleneck, not generation: "The game is not 'how fast can we build' any more. It is 'how fast can we tell whether this is right.'" Implication: build better review surfaces, not better prompts.
+- "Verified" has shifted from "read by you" to "checked by tests, by type checkers, by automated gates, or by you where your judgement matters" — at agent throughput, reading every diff in your head does not scale.
+- Computational sensors (static analysis, tests) belong in the harness; agents address *every* warning where humans slack. Converting an objective rule into a formal, deterministic format gives more assurance than fuzzy prompt guidance.
+- Naming matters more under LLMs, not less: models infer meaning from literal features (names, structure, local context); arbitrary identifiers measurably degrade model performance. Function boundaries are the first unit of structure.
+
+### 2026-05-15 — chenhg5/cc-connect
+
+- Go bridge daemon connecting local coding agents (Claude Code, Codex, Cursor, Gemini CLI, etc.) to chat platforms (Slack, Telegram, Discord, Feishu, …) so a local agent is drivable from a phone with no public IP. Integration and transport layer, not an instruction framework.
+- Plugin self-registration via `init()` (`core.RegisterAgent()` / `core.RegisterPlatform()`); strict dependency direction — `core/` must never import `agent/` or `platform/`.
+- Capability-interface over identity-switch: explicit prohibition of `if p.Name() == "feishu"`; behavior differences go through capability interfaces.
+- Uniform per-host adapter layout: one folder per integration target (`agent/{claudecode,codex,cursor,gemini,…}/`).
+- Versioned, dual-language preset manifests (`skill-presets.json`, `provider-presets.json`) with `version`, `updated_at`, and per-entry `name`/`display_name`/`description`/`tags`/`featured`; provider abstraction keyed by agent type.
+- Secrets via `${ENV_VAR}` interpolation; `core.RedactToken()` keeps tokens out of logs. Per-project auth via `admin_from`, `run_as_user` OS isolation, role-scoped `disabled_commands` and `rate_limit`.
+- Explicit session and context lifecycle as config: `reset_on_idle_mins`, `[projects.auto_compress]`, `[projects.heartbeat]`; selective compilation via build tags drops unused integrations (language-specific).
+- Counter-example: ships both `AGENTS.md` and `CLAUDE.md` with largely duplicated content and no cross-reference — the drift hazard our single-source and mirror discipline exists to prevent.
+
 ## Extends or contradicts existing observations
 
 - **Extends Anthropic Skills** — deer-flow shows `description` should embed *trigger phrases and override declarations*, not just "what + when".
 - **Extends huashu's anti-hallucination pattern** — deer-flow `deep-research` generalizes it as a hard-stop checklist gate inside any research-style skill.
 - **Extends gstack's "Iron Laws"** — SuperClaude's `Boundaries` section is the same pattern with a softer name and a fixed location at the end of the file.
 - **Sharper than our 200-line file rule** — deer-flow `skill-creator` uses a 300-line threshold for promoting prose to `references/`. Treat as a sibling rule for skill bodies (which can carry more domain detail than baseline rule files).
+- **Extends our Validation step** — Fowler/Böckeler reframe "verified" as checked by deterministic sensors (tests, types, lint, CI gates), not read-by-human, at agent throughput.
+- **New: spec/code two-way sync** — SPDD adds a directional rule we lacked: behavior change → spec first; refactor → code first then sync the spec back.
+- **Reinforces single-source discipline (negative example)** — cc-connect's duplicated, un-cross-referenced `AGENTS.md`/`CLAUDE.md` is the exact failure mode our baseline-and-mirror rule prevents.
 
 ## Promoted rules
 
@@ -115,6 +147,10 @@ These observations have been promoted into agent-readable rule files. Each row l
 | Hard-stop checklist for research-style work ("If any answer is NO, continue") | deer-flow `deep-research` | `AGENTS.md` §Anti-hallucination |
 | Single source, multi-host artifacts (one canonical content, many delivery files) | karpathy-skills, gstack multi-host installer | `docs/ai-agent-coding-strategy.md` §Single source, multi-host |
 | Append-mode install as a documented fallback for existing projects | karpathy-skills | `docs/ai-agent-coding-strategy.md` §Single source, multi-host |
+| Spec/prompt and code kept in two-way sync (behavior → spec first; refactor → code first, then sync spec) | Thoughtworks SPDD | `AGENTS.md` §House style; `.github/copilot-instructions.md` §House style |
+| "Verified" means checked by deterministic sensors (tests, types, lint, CI gates), not just read | Fowler Fragments (Parsons, Böckeler) | `AGENTS.md` §Validation; `.github/copilot-instructions.md` §Editing rules |
+| REASONS Canvas as a structured-prompt template | Thoughtworks SPDD | `docs/knowledge/structured-prompt-driven-development.md` |
+| Agent-integration plumbing patterns (bridge daemon, capability-interface, plugin self-registration, preset manifest) | chenhg5/cc-connect | `docs/knowledge/agent-integration-patterns.md` |
 
 ## Pending observations (not yet promoted)
 
@@ -126,9 +162,12 @@ These observations have been promoted into agent-readable rule files. Each row l
 - Command frontmatter that declares wiring (`mcp-servers:`, `personas:`) — adopt when we add commands.
 - `evals/evals.json` co-located per skill with baseline-vs-skill parallel runs — defer until we have a skill runtime.
 - Bridge-skill pattern (e.g., `claude-to-deerflow`) — defer until we ship cross-platform integrations.
+- `openspdd`-style per-step CLI for spec → code → sync — adopt only if we add a code-generation runtime.
+- Provider abstraction keyed by agent type (cc-connect) — relevant only if we add multi-agent provider config.
 
 ## Anti-patterns observed (and rejected)
 
 - Hard-coding brand colors, IDs, or commands from memory (huashu).
 - Letting agents fix code without first investigating root cause (gstack `/investigate` Iron Law).
 - Mixing project-specific examples into general agent rules (CLAUDE.md guideline; observed in mixed instruction files).
+- Shipping duplicated `AGENTS.md` and `CLAUDE.md` without a cross-reference (cc-connect) — guarantees drift; our baseline-and-mirror discipline forbids it.
