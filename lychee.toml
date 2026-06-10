@@ -1,0 +1,9 @@
+# Link-check config for lychee (tier 3 locally, doc-quality + weekly online runs in CI).
+# Exclude intentionally unreachable URLs so the weekly online run does not file
+# false-positive "Link Checker Report" issues.
+
+exclude = [
+  # Placeholder install URL in BOOTSTRAP.md; users substitute their own account.
+  'raw\.githubusercontent\.com/<your-username>',
+  '<your-username>',
+]

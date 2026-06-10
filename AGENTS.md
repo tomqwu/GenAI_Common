@@ -52,7 +52,7 @@ Claude Code does not read this file natively; `CLAUDE.md` cross-references it vi
 
 Before declaring a change done:
 
-- [ ] Markdown lints clean if the project has a linter configured (none yet — add one if it lands).
+- [ ] `./scripts/check.sh` passes (file-length cap, Boundaries sections, markdownlint, offline link check, typos). CI runs the same tiers in `.github/workflows/doc-quality.yml`. In a repo without the runner, lint markdown with whatever linter the project configures.
 - [ ] All cross-references resolve. `grep -RIn '\](\./\|](docs/\|](\.github/' .` and confirm targets exist.
 - [ ] No secrets in the diff. `git diff --cached | grep -iE 'api[_-]?key|secret|token|password'` returns nothing.
 - [ ] Each new or edited rule is imperative and verifiable.
@@ -61,7 +61,7 @@ Before declaring a change done:
 
 ## Dev environment tips
 
-- This repo currently ships only markdown. There is no build step, no package manager, and no test runner.
+- This repo ships markdown plus doc-quality tooling. There is no build step and no package manager; validation runs through `./scripts/check.sh` locally and the `doc-quality` workflow in CI.
 - If code samples are added later, place them under `examples/` and include a runnable command in the same file.
 - Do not add dependencies unless a sample explicitly requires them.
 
@@ -128,6 +128,7 @@ When the user provides repos, guides, articles, or PDFs:
 - `BOOTSTRAP.md` — drop-in install commands and replace-before-use checklist for seeding a new repo.
 - `.github/workflows/*.yml` — repo-specific CI; not part of the bootstrap-template surface.
 - `.markdownlint.json` — tier-2 lint config; consumed by `markdownlint-cli2` locally and in CI.
+- `lychee.toml` — link-check config; excludes intentionally unreachable placeholder URLs (e.g., `<your-username>` in `BOOTSTRAP.md`).
 - `scripts/check.sh` — local runner that mirrors the CI tiers; auto-skips uninstalled tools.
 - `docs/ai-agent-coding-strategy.md` — human-facing strategy, not enforced as rules.
 - `docs/research-log.md` — observations vs. promoted rules.

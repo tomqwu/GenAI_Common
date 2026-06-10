@@ -28,6 +28,14 @@ if [ -n "$missing" ]; then
   fail=1
 fi
 
+# Secrets scan over the staged diff. Informational, not a hard fail: rule files
+# legitimately contain words like "secret" — review hits, don't auto-block.
+# Cross-reference resolution is tier 3's job (lychee --offline).
+hits=$(git diff --cached | grep -iE 'api[_-]?key|secret|token|password' || true)
+if [ -n "$hits" ]; then
+  printf 'i  Secret-pattern matches in staged diff (review, not necessarily a failure):\n%s\n' "$hits"
+fi
+
 printf '\n** Tier 2 — markdownlint\n'
 if command -v npx >/dev/null 2>&1; then
   npx --yes markdownlint-cli2 "**/*.md" "#node_modules" || fail=1
