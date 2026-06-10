@@ -22,7 +22,7 @@ It fits best when:
 
 - CI exists and covers the important runtime paths.
 - PR comments are treated as the visible record of review decisions.
-- The team wants builder momentum without giving the builder merge authority.
+- The team wants builder momentum without letting the builder bypass review.
 - The reviewing agent can inspect diffs, CI state, logs, comments, and tests.
 
 ## Minimum viable workflow
@@ -46,22 +46,26 @@ LGTM is attached to a commit, not to a feeling.
 Use this for Claude Code or any agent responsible for writing code:
 
 ```text
-You may write code, push branches, and open PRs, but you must not merge unless
-the user explicitly asks you to merge.
+You may write code, push branches, and open PRs. Do not merge before the review
+gate passes.
 
 After opening or updating a PR:
 1. Push the branch.
 2. Wait for CI to start and finish.
-3. Do not enable auto-merge.
-4. Wait for the independent PR-review automation.
+3. Wait for the independent PR-review automation.
 
-A PR is merge-ready only when an automation-authored comment on the PR says:
+A PR is mergeable only when an automation-authored comment on the PR says:
 
 LGTM
 <!-- codex-pr-review: <head_sha> -->
 
 The marker must match the current PR head SHA. If a new commit is pushed, any
 older LGTM is stale.
+
+You are authorized to merge after the review gate passes. Immediately before
+merging, re-fetch the PR head SHA, CI state, comments, and reviews. Merge only
+if CI is green, the marker matches the current head SHA, and no newer blocking
+feedback exists. Otherwise report that the PR is ready but unmerged.
 
 If the reviewer comments "Not LGTM yet":
 1. Treat it as blocking feedback.
@@ -100,7 +104,8 @@ LGTM
 Before posting, re-fetch the PR head SHA, CI state, and recent comments. Only
 post if the head SHA is unchanged and no marker already exists for that SHA.
 
-Do not merge PRs. Do not enable auto-merge. Do not post duplicate comments.
+Do not merge PRs from the reviewer role. Do not enable auto-merge. Do not post
+duplicate comments.
 ```
 
 ## Scheduler and race controls
@@ -139,7 +144,8 @@ repeated run summaries.
 
 ## Validation checklist
 
-- [ ] The builder cannot merge without explicit user instruction.
+- [ ] The builder can merge after the review gate passes.
+- [ ] The builder cannot merge before the gate.
 - [ ] The reviewer never posts `LGTM` while CI is pending or failing.
 - [ ] The review marker includes the exact head SHA.
 - [ ] A new commit makes the prior marker stale.

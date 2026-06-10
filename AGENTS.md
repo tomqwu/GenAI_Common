@@ -91,6 +91,44 @@ Follow-ups:
 
 PR titles should be under 70 characters. Use the description for detail.
 
+## Agentic PR review gate
+
+Use this pattern when one agent writes code and another agent reviews the PR.
+Approval is valid only for the exact PR head SHA that was reviewed.
+
+Builder prompt:
+
+```text
+You may write code, push branches, and open PRs. Do not merge before the review
+gate passes. After opening or updating a PR, push the branch, wait for CI, and
+wait for independent review. Treat "Not LGTM yet" as blocking. A PR is mergeable
+only when a reviewer comments:
+
+LGTM
+<!-- codex-pr-review: <head_sha> -->
+
+The marker must match the current head SHA; any new commit makes prior approval
+stale. You are authorized to merge after the review gate passes. Immediately
+before merging, re-fetch the head SHA, CI state, comments, and reviews. Merge
+only if CI is green, the marker matches the current head SHA, and no newer
+blocking feedback exists. Otherwise report that the PR is ready but unmerged.
+Keep review and fix discussion visible on the PR.
+```
+
+Reviewer prompt:
+
+```text
+Review open PRs in the current repo. Fetch metadata, head SHA, diff, comments,
+reviews, and CI. Never post LGTM while CI is pending or failing. If CI fails or
+code review finds issues, comment "Not LGTM yet" with actionable findings and:
+
+<!-- codex-pr-review: <head_sha> -->
+
+If CI is green and no findings remain, post exactly "LGTM" plus the marker.
+Before posting, re-fetch the head SHA and comments to avoid duplicate or stale
+reviews. Do not merge PRs from the reviewer role.
+```
+
 ## Agent instruction hierarchy
 
 When rules overlap, follow the more specific and safer one. Precedence:
