@@ -33,13 +33,15 @@ Operating model for adding to the knowledge base:
 
 ## Current research sources
 
-The live, authoritative list lives in [`docs/source-repos.md`](./docs/source-repos.md) — 12 sources tracked at last count, each with status (`pending` / `extracted` / `promoted` / `rejected`), the practices we use them for, and a URL.
+The live, authoritative list lives in [`docs/source-repos.md`](./docs/source-repos.md) — every source carries a status (`pending` / `extracted` / `promoted` / `rejected`), the practices we use it for, and a URL.
 
 Highlights so far:
 
 - **Skill conventions** — Anthropic Agent Skills, `google/skills`, `bytedance/deer-flow`, `forrestchang/andrej-karpathy-skills`.
 - **Cross-agent baselines** — the `AGENTS.md` spec, `openai/codex` AGENTS.md, `alchaincyf/huashu-design`, `garrytan/gstack`, `SuperClaude-Org/SuperClaude_Framework`.
 - **Per-host instruction formats** — Anthropic Claude Code memory docs, GitHub Copilot custom instructions, `github/awesome-copilot`.
+- **Engineering methods** — Thoughtworks Structured-Prompt-Driven Development, Martin Fowler's Fragments on verification and harness engineering.
+- **Integration patterns** — `chenhg5/cc-connect` bridge-daemon and adapter conventions.
 
 Add new sources by following the [research handling workflow](./AGENTS.md#research-handling): row in `source-repos.md`, observation in `docs/research-log.md`, then promote stable practices.
 

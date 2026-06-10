@@ -35,7 +35,7 @@ The universal baseline is in `AGENTS.md`. This file restates the parts that matt
 
 ## Build, test, and dependencies
 
-- This repo currently has no build step, no package manager, and no test runner.
+- This repo has no build step and no package manager. Doc-quality checks run via `./scripts/check.sh` locally and the `doc-quality` workflow in CI.
 - Do not suggest installing or updating packages.
 - If code samples are added later, place them under `examples/` and include a runnable command in the same file.
 

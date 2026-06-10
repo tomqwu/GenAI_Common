@@ -11,7 +11,7 @@ The cross-agent baseline lives in [`AGENTS.md`](./AGENTS.md). Read it first; the
 1. **Bootstrap source** for new projects — `AGENTS.md`, `CLAUDE.md`, and `.github/copilot-instructions.md` are designed to drop into a fresh repo. See [`BOOTSTRAP.md`](./BOOTSTRAP.md).
 2. **Personal knowledge base** for AI and software-engineering practice — research observations live under `docs/`, with promoted rules in instruction files and descriptive notes in `docs/knowledge/`.
 
-This repo is not a product application. There is no build, no package manager, and no test runner. Edits are almost always markdown.
+This repo is not a product application. There is no build and no package manager; the doc-quality checks below are its test suite. Edits are almost always markdown.
 
 ## Architecture: layered instruction files
 
@@ -73,7 +73,7 @@ for f in AGENTS.md CLAUDE.md BOOTSTRAP.md \
 done
 ```
 
-The secrets, file-length, and Boundaries checks should print nothing. The cross-ref grep is informational — each line should point at an existing file; manually verify any new ones.
+The file-length and Boundaries checks should print nothing. The secrets and cross-ref greps are informational — instruction files legitimately contain words like "secret" in rules, so review hits rather than treating any output as failure.
 
 ### Tier 2 — markdown lint
 
@@ -81,7 +81,7 @@ The secrets, file-length, and Boundaries checks should print nothing. The cross-
 npx markdownlint-cli2 "**/*.md" "#node_modules"
 ```
 
-Configure via `.markdownlint.json` at the repo root. Suggested baseline:
+Configured via `.markdownlint.json` at the repo root:
 
 ```json
 {
@@ -101,7 +101,7 @@ lychee --offline '**/*.md'    # relative links only, fast
 lychee '**/*.md'              # adds external URL probes, network-bound
 ```
 
-Add `lychee.toml` to allowlist intentionally unreachable URLs (e.g., the `<your-username>` placeholder in `BOOTSTRAP.md`).
+`lychee.toml` at the repo root allowlists intentionally unreachable URLs (e.g., the `<your-username>` placeholder in `BOOTSTRAP.md`) so the weekly online run does not file false-positive issues.
 
 ### Tier 4 — spell check
 
