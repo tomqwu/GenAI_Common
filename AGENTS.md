@@ -28,6 +28,7 @@ Claude Code does not read this file natively; `CLAUDE.md` cross-references it vi
 - One topic per file. Per-path rules go in `.claude/rules/` (Claude) or `.github/instructions/` (Copilot).
 - End any prescriptive instruction file (rules, skills, commands) with a `Boundaries` section that lists what the file does *not* cover and which sibling file does. Forces explicit scope hand-off instead of silent ambiguity.
 - When a file uses YAML frontmatter with a `description:` field, the description must include *trigger phrases* (when to load this) and any competing-tool overrides ("Use this instead of X for Y"), not just a one-line summary.
+- When a tracked spec, prompt, or design doc governs code, keep the two in sync within the same change: for behavior changes, update the spec first then the code; for pure refactors, change the code first then sync the spec back. Never let intent and implementation drift silently.
 
 ## Safety
 
@@ -56,6 +57,7 @@ Before declaring a change done:
 - [ ] No secrets in the diff. `git diff --cached | grep -iE 'api[_-]?key|secret|token|password'` returns nothing.
 - [ ] Each new or edited rule is imperative and verifiable.
 - [ ] Each new source is recorded in `docs/source-repos.md` and `docs/research-log.md`.
+- [ ] "Verified" means checked by a deterministic sensor (tests, type checker, linter, CI gate), not just read. At agent throughput, prefer adding a sensor over re-reading a diff; reserve human review for where judgement genuinely matters.
 
 ## Dev environment tips
 

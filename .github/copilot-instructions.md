@@ -16,6 +16,7 @@ The universal baseline is in `AGENTS.md`. This file restates the parts that matt
 - Use checklists, tables, and templates.
 - Keep each file under ~200 lines.
 - Markdown only. No HTML except block comments for human-only notes.
+- When a tracked spec, prompt, or design doc governs code, update both in the same change: behavior changes update the spec first then the code; pure refactors change the code first then sync the spec back.
 
 ## Editing rules
 
@@ -24,6 +25,7 @@ The universal baseline is in `AGENTS.md`. This file restates the parts that matt
 - Prefer append-and-refine over replacing whole documents.
 - Do not delete `docs/research-log.md` notes unless the user asks.
 - Do not invent file paths, function names, commands, URLs, or identifiers.
+- Treat "verified" as checked by a deterministic sensor (tests, types, lint, CI gate), not merely read. Prefer adding a sensor over re-reading at scale.
 
 ## Safety
 
